@@ -1,19 +1,21 @@
-/* Style the form */
-
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #ae2929;
+  background-color: #2b2929;
   padding: 20px;
 }
 
 h1{
   text-align: center;
   margin-bottom: 20px;
+  color: #ffffff;
+
 }
 form {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  color: #ffffff;
+  
 }
 input[type="text"] {
   padding: 10px;
@@ -25,7 +27,7 @@ input[type="text"] {
 input[type="submit"] {
   padding: 10px;
   background-color: #007bff;
-  color: #fff;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -34,7 +36,6 @@ input[type="submit"]:hover {
   background-color: #0069d9;
 }
 
-/* Style the list */
 ul {
   list-style: none;
   padding: 0;
@@ -54,7 +55,7 @@ li del {
 li button {
   margin-left: auto;
   background-color: #dc3545;
-  color: #fff;
+  color: #fdfdfd;
   border: none;
   border-radius: 5px;
   cursor: pointer;
