@@ -1,36 +1,36 @@
-const taskInput = document.getElementById("task");
-const taskList = document.getElementById("tasks");
+const form = document.querySelector('form');
+const taskList = document.querySelector('#task-list');
 
-function addTask() {
-    const taskText = taskInput.value.trim();
-    if (taskText !== "") {
-        const taskItem = document.createElement("li");
-        taskItem.innerHTML = `
-            <span>${taskText}</span>
-            <button onclick="editTask(this)">Edit</button>
-            <button onclick="completeTask(this)">Selesai</button>
-            <button onclick="deleteTask(this)">Hapus</button>
-        `;
-        taskList.appendChild(taskItem);
-        taskInput.value = "";
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const taskInput = document.querySelector('#task');
+  const taskText = taskInput.value.trim();
+  if (taskText !== '') {
+    const taskItem = document.createElement('li');
+    const taskCheckbox = document.createElement('input');
+    taskCheckbox.type = 'checkbox';
+    const taskTextSpan = document.createElement('span');
+    taskTextSpan.textContent = taskText;
+    const taskDeleteButton = document.createElement('button');
+    taskDeleteButton.textContent = 'Delete';
+    taskItem.appendChild(taskCheckbox);
+    taskItem.appendChild(taskTextSpan);
+    taskItem.appendChild(taskDeleteButton);
+    taskList.appendChild(taskItem);
+    taskInput.value = '';
+  }
+});
+
+taskList.addEventListener('click', (event) => {
+  if (event.target.tagName === 'INPUT' && event.target.type === 'checkbox') {
+    const taskText = event.target.nextElementSibling;
+    if (event.target.checked) {
+      taskText.classList.add('completed');
+    } else {
+      taskText.classList.remove('completed');
     }
-}
-
-function editTask(button) {
-    const taskItem = button.parentElement;
-    const taskText = taskItem.querySelector("span").textContent;
-    const updatedTask = prompt("Edit tugas:", taskText);
-    if (updatedTask !== null) {
-        taskItem.querySelector("span").textContent = updatedTask;
-    }
-}
-
-function completeTask(button) {
-    const taskItem = button.parentElement;
-    taskItem.classList.toggle("completed");
-}
-
-function deleteTask(button) {
-    const taskItem = button.parentElement;
-    taskItem.remove();
-}
+  } else if (event.target.tagName === 'BUTTON') {
+    const taskItem = event.target.parentElement;
+    taskList.removeChild(taskItem);
+  }
+});
