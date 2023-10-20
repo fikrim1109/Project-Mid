@@ -9,7 +9,6 @@ h1{
   font-size: 40px;
   margin-bottom: 50px;
   color: #ffffff;
-
 }
 
 form {
@@ -20,10 +19,11 @@ form {
   
 }
 input[type="text"] {
+  display: flex;
   padding: 10px;
   margin-bottom: 15px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 input[type="submit"] {

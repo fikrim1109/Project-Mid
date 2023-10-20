@@ -1,6 +1,18 @@
 const form = document.querySelector('form');
 const taskList = document.querySelector('#task-list');
+const taskForm = document.querySelector("form");
+const taskInput = document.getElementById("task");
+const taskWarning = document.getElementById("task-warning");
 
+taskForm.addEventListener("submit", (event) => {
+  if (taskInput.value.trim() === "") {
+    event.preventDefault();
+    taskWarning.style.display = "inline";
+  } else {
+    taskWarning.style.display = "none";
+  }
+  
+});
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   const taskInput = document.querySelector('#task');
