@@ -55,7 +55,7 @@ async function addTask() {
 
     // Tampilkan deadline di UI
     const displayDeadline = document.getElementById('displayDeadline');
-    displayDeadline.textContent = deadline;
+    displayDeadline.textContent = taskText;
   }
 }
 

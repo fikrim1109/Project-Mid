@@ -72,7 +72,7 @@ input[type="date"] {
 
 #displayDeadline {
   font-weight: bold;
-  color: #4caf50;
+  color: #4caf50; /* Warna teks hijau */
 }
 
 .points-heading {
@@ -92,3 +92,4 @@ input[type="date"] {
   text-decoration: line-through;
   color: #888;
 }
+
