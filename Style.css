@@ -13,7 +13,7 @@ body {
   border-radius: 8px;
   padding: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  width: 600px;
   text-align: center;
 }
 
@@ -24,6 +24,7 @@ body {
 
 .input-container {
   display: flex;
+  flex-direction: column;
   gap: 10px;
   margin-bottom: 20px;
 }
@@ -63,6 +64,9 @@ input[type="date"] {
   background-color: #f1f1f1;
   margin-bottom: 10px;
   border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .deadline-container {
@@ -93,3 +97,17 @@ input[type="date"] {
   color: #888;
 }
 
+.done-button {
+  background-color: #4caf50; /* Warna hijau */
+  color: #fff; /* Warna teks putih */
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.done-button:hover {
+  background-color: #45a049; /* Warna hijau yang sedikit lebih gelap saat hover */
+}

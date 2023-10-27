@@ -27,6 +27,7 @@ function renderTask(task) {
   // Done button
   const doneButton = document.createElement('button');
   doneButton.textContent = 'Done';
+  doneButton.className = 'done-button'
   doneButton.onclick = function() {
     completeTask(task.id, li);
   };
