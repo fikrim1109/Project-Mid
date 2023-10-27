@@ -1,48 +1,82 @@
-const form = document.querySelector('form');
-const taskList = document.querySelector('#task-list');
-const taskForm = document.querySelector("form");
-const taskInput = document.getElementById("task");
-const taskWarning = document.getElementById("task-warning");
+const apiUrl = 'https://jsonplaceholder.typicode.com/todos';
+const imageApiUrl = 'https://api.unsplash.com/photos/random?count=5&client_id=YOUR_UNSPLASH_ACCESS_KEY';
 
-taskForm.addEventListener("submit", (event) => {
-  if (taskInput.value.trim() === "") {
-    event.preventDefault();
-    taskWarning.style.display = "inline";
-  } else {
-    taskWarning.style.display = "none";
-  }
+let points = 0;
+
+async function fetchData(url) {
+  const response = await fetch(url);
+  return await response.json();
+}
+
+function renderTask(task) {
+  const taskList = document.getElementById('taskList');
+  const li = document.createElement('li');
+  li.textContent = `${task.title} (Deadline: ${task.deadline})`;
   
-});
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const taskInput = document.querySelector('#task');
-  const taskText = taskInput.value.trim();
-  if (taskText !== '') {
-    const taskItem = document.createElement('li');
-    const taskCheckbox = document.createElement('input');
-    taskCheckbox.type = 'checkbox';
-    const taskTextSpan = document.createElement('span');
-    taskTextSpan.textContent = taskText;
-    const taskDeleteButton = document.createElement('button');
-    taskDeleteButton.textContent = 'Delete';
-    taskItem.appendChild(taskCheckbox);
-    taskItem.appendChild(taskTextSpan);
-    taskItem.appendChild(taskDeleteButton);
-    taskList.appendChild(taskItem);
-    taskInput.value = '';
-  }
-});
+  // Done button
+  const doneButton = document.createElement('button');
+  doneButton.textContent = 'Done';
+  doneButton.onclick = function() {
+    completeTask(task.id, li);
+  };
+  li.appendChild(doneButton);
 
-taskList.addEventListener('click', (event) => {
-  if (event.target.tagName === 'INPUT' && event.target.type === 'checkbox') {
-    const taskText = event.target.nextElementSibling;
-    if (event.target.checked) {
-      taskText.classList.add('completed');
-    } else {
-      taskText.classList.remove('completed');
-    }
-  } else if (event.target.tagName === 'BUTTON') {
-    const taskItem = event.target.parentElement;
-    taskList.removeChild(taskItem);
+  taskList.appendChild(li);
+}
+
+async function addTask() {
+  const taskText = document.getElementById('task').value;
+  const deadline = document.getElementById('deadline').value;
+  if (taskText && deadline) {
+    const task = {
+      userId: 1,
+      id: Date.now(),
+      title: taskText,
+      completed: false,
+      deadline: deadline
+    };
+
+    // Simpan task ke API (untuk simulasi, sebenarnya Anda harus menggunakan metode POST ke server)
+    console.log('Task Added:', task);
+    
+    // Tampilkan task di UI
+    renderTask(task);
   }
-});
+}
+
+function completeTask(taskId, listItem) {
+  // Tandai tugas sebagai selesai di API (untuk simulasi, sebenarnya Anda harus menggunakan metode PUT/PATCH ke server)
+  console.log('Task Completed:', taskId);
+
+  // Berikan poin saat menyelesaikan tugas sekali saja
+  if (!listItem.classList.contains('completed')) {
+    points += 100;
+    document.getElementById('points').textContent = points;
+    listItem.classList.add('completed');
+  }
+}
+
+async function redeemPoints() {
+  if (points >= 100) {
+    // Tukar poin dengan gambar dari API Unsplash
+    const images = await fetchData(imageApiUrl);
+    const imagesContainer = document.getElementById('images');
+    imagesContainer.innerHTML = '';
+    images.forEach(image => {
+      const img = document.createElement('img');
+      img.src = image.urls.small;
+      imagesContainer.appendChild(img);
+    });
+
+    // Kurangi poin
+    points -= 100;
+    document.getElementById('points').textContent = points;
+  } else {
+    alert('Not enough points to redeem.');
+  }
+}
+
+function setDeadline() {
+  const deadline = document.getElementById('deadline').value;
+  console.log('Deadline set for tasks:', deadline);
+}

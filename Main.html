@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>To-Do List</title>
-    <link rel="stylesheet" href="Style.css">
-  </head>
-  <body>
-    <h1>To-Do List</h1>
-    <form>
-      <label for="task">Add a task :</label>
-      <input type="text" id="task" name="task" required>
-      <span id="task-warning" style="display: none; color: red;">Please fill in the task field.</span>
-      <input type="submit" value="Add Task">
-    </form>
-    <ul id="task-list"></ul>
-    <script src="script.js"></script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List App</title>
+  <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="heading">To-Do List</h1>
+    <div class="input-container">
+      <input type="text" id="task" placeholder="Add a new task...">
+      <input type="date" id="deadline">
+      <button class="add-button" onclick="addTask()">Add Task</button>
+    </div>
+    <ul id="taskList" class="task-list"></ul>
+    <div class="points-container">
+      <h2 class="points-heading">Points: <span id="points">0</span></h2>
+      <button class="redeem-button" onclick="redeemPoints()">Redeem Points</button>
+      <div id="images" class="image-container"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
 </html>
