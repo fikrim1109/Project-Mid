@@ -11,7 +11,18 @@ async function fetchData(url) {
 function renderTask(task) {
   const taskList = document.getElementById('taskList');
   const li = document.createElement('li');
-  li.textContent = `${task.title} (Deadline: ${task.deadline})`;
+  
+  // Nama tugas
+  const taskName = document.createElement('span');
+  taskName.textContent = task.title;
+  li.appendChild(taskName);
+  
+  // Deadline
+  const deadline = document.createElement('span');
+  deadline.textContent = ` (Deadline: ${task.deadline})`;
+  deadline.style.fontStyle = 'italic';
+  deadline.style.marginLeft = '10px'; // Pisahkan dengan margin kiri
+  li.appendChild(deadline);
   
   // Done button
   const doneButton = document.createElement('button');
@@ -41,6 +52,10 @@ async function addTask() {
     
     // Tampilkan task di UI
     renderTask(task);
+
+    // Tampilkan deadline di UI
+    const displayDeadline = document.getElementById('displayDeadline');
+    displayDeadline.textContent = deadline;
   }
 }
 
@@ -74,9 +89,4 @@ async function redeemPoints() {
   } else {
     alert('Not enough points to redeem.');
   }
-}
-
-function setDeadline() {
-  const deadline = document.getElementById('deadline').value;
-  console.log('Deadline set for tasks:', deadline);
 }
