@@ -36,29 +36,58 @@ function renderTask(task) {
   taskList.appendChild(li);
 }
 
+// Fungsi untuk menambahkan task dan tanggal ke localStorage
 async function addTask() {
-  const taskText = document.getElementById('task').value;
-  const deadline = document.getElementById('deadline').value;
-  if (taskText && deadline) {
+  const taskText = document.getElementById("task").value;
+  const deadline = document.getElementById("deadline").value;
+
+  // Periksa apakah tanggal yang dimasukkan adalah tanggal valid
+  if (taskText && deadline && !isNaN(Date.parse(deadline))) {
+    // Simpan data ke localStorage
     const task = {
       userId: 1,
       id: Date.now(),
       title: taskText,
       completed: false,
-      deadline: deadline
+      deadline: deadline,
     };
 
-    // Simpan task ke API (untuk simulasi, sebenarnya Anda harus menggunakan metode POST ke server)
-    console.log('Task Added:', task);
-    
+    // Menyimpan data ke localStorage
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+
     // Tampilkan task di UI
     renderTask(task);
 
-    // Tampilkan deadline di UI
-    const displayDeadline = document.getElementById('displayDeadline');
-    displayDeadline.textContent = taskText;
+    // Tampilkan tanggal paling kecil dari localStorage di UI
+    displaySmallestDeadline();
+  } else {
+    alert("Invalid task or deadline input. Please enter both task and valid deadline.");
   }
 }
+
+// Fungsi untuk menampilkan tanggal paling kecil dari localStorage di UI
+function displaySmallestDeadline() {
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+  // Urutkan tasks berdasarkan deadline (tanggal paling kecil)
+  tasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+
+  // Ambil tanggal paling kecil
+  const smallestDeadline = tasks.length > 0 ? tasks[0].deadline : "No tasks with valid deadlines";
+
+  // Tampilkan tanggal paling kecil di UI
+  const displayDeadline = document.getElementById("displayDeadline");
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  displayDeadline.textContent = new Date(smallestDeadline).toLocaleDateString(undefined, options);
+}
+
+// Fungsi untuk memuat tugas dari localStorage saat halaman dimuat
+window.onload = function() {
+  displaySmallestDeadline();
+}
+
 
 function completeTask(taskId, listItem) {
   // Tandai tugas sebagai selesai di API (untuk simulasi, sebenarnya Anda harus menggunakan metode PUT/PATCH ke server)
