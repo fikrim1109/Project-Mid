@@ -34,6 +34,17 @@ function renderTask(task) {
   li.appendChild(doneButton);
 
   taskList.appendChild(li);
+
+  // Delete button
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+  deleteButton.className = 'delete-button';
+  deleteButton.onclick = function() {
+    deleteTask(task.id, li, task.deadline);
+  };
+  li.appendChild(deleteButton);
+  
+  taskList.appendChild(li);
 }
 
 // Fungsi untuk menambahkan task dan tanggal ke localStorage
@@ -67,6 +78,8 @@ async function addTask() {
   }
 }
 
+localStorage.clear();
+
 // Fungsi untuk menampilkan tanggal paling kecil dari localStorage di UI
 function displaySmallestDeadline() {
   let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -83,15 +96,15 @@ function displaySmallestDeadline() {
   displayDeadline.textContent = new Date(smallestDeadline).toLocaleDateString(undefined, options);
 }
 
-// Fungsi untuk memuat tugas dari localStorage saat halaman dimuat
-window.onload = function() {
-  displaySmallestDeadline();
-}
-
-
 function completeTask(taskId, listItem) {
   // Tandai tugas sebagai selesai di API (untuk simulasi, sebenarnya Anda harus menggunakan metode PUT/PATCH ke server)
   console.log('Task Completed:', taskId);
+  listItem.remove();
+
+  // Hapus task dari localStorage
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks = tasks.filter(task => task.id !== taskId);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 
   // Berikan poin saat menyelesaikan tugas sekali saja
   if (!listItem.classList.contains('completed')) {
@@ -99,6 +112,12 @@ function completeTask(taskId, listItem) {
     document.getElementById('points').textContent = points;
     listItem.classList.add('completed');
   }
+
+  // Urutkan ulang tanggal yang tersisa setelah menghapus task
+  tasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+  // Tampilkan tanggal paling kecil dari localStorage di UI
+  displaySmallestDeadline();
 }
 
 async function redeemPoints() {
@@ -119,4 +138,29 @@ async function redeemPoints() {
   } else {
     alert('Not enough points to redeem.');
   }
+}
+
+// Fungsi untuk memuat tugas dari localStorage saat halaman dimuat
+window.onload = function() {
+  displaySmallestDeadline();
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks.forEach(task => {
+    renderTask(task);
+  });
+};
+
+function deleteTask(taskId, listItem) {
+  // Hapus task dari localStorage
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks = tasks.filter(task => task.id !== taskId);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+
+  // Hapus listItem dari UI
+  listItem.remove();
+
+  // Urutkan ulang tanggal yang tersisa setelah menghapus task
+  tasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+  // Tampilkan tanggal paling kecil dari localStorage di UI
+  displaySmallestDeadline();
 }

@@ -116,3 +116,18 @@ input[type="date"] {
 .done-button:hover {
   background-color: #45a049; /* Warna hijau yang sedikit lebih gelap saat hover */
 }
+
+.delete-button {
+  background-color: #f44336; /* Warna merah */
+  color: #fff; /* Warna teks putih */
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #da190b; /* Warna merah yang sedikit lebih gelap saat hover */
+}
