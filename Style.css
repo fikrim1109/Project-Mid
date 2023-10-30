@@ -1,22 +1,24 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #393535;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-image: url(background-image.jpg);
+  background-size: cover;
 }
 
 .container {
-  background-color: #282727;
+  background-color: rgba(255, 255, 255, 0.095); /* translucent white */
   border-radius: 8px;
-  border-color: rgb(255, 255, 255);
+  border-color: rgba(255, 255, 255, 0.662); /* translucent white */
   border-style: solid;
   padding: 40px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* slight shadow */
   width: 600px;
   text-align: center;
+  backdrop-filter: blur(10px); /* blur effect */
 }
 
 .heading {
