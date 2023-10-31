@@ -1,4 +1,3 @@
-const apiUrl = 'https://jsonplaceholder.typicode.com/todos';
 const imageApiUrl = 'https://api.unsplash.com/photos/random?count=5&client_id=9Rpsygv25tf9Pl8i8jCHVFfG7Gn3KOAUOKWqOrOd_Ds';
 
 let points = 0;
