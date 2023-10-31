@@ -100,11 +100,6 @@ input[type="date"] {
   border-radius: 5px;
 }
 
-.task-list li.completed {
-  text-decoration: line-through;
-  color: #888;
-}
-
 .done-button {
   background-color: #4caf50; /* Warna hijau */
   color: #fff; /* Warna teks putih */
@@ -178,4 +173,8 @@ input[type="date"] {
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 10px;
+}
+
+.redeem-button:hover {
+  background-color: #0c7cd5; /* Warna biru yang sedikit lebih gelap saat hover */
 }
