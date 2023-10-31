@@ -1,5 +1,5 @@
 const apiUrl = 'https://jsonplaceholder.typicode.com/todos';
-const imageApiUrl = 'https://api.unsplash.com/photos/random?count=5&client_id=YOUR_UNSPLASH_ACCESS_KEY';
+const imageApiUrl = 'https://api.unsplash.com/photos/random?count=5&client_id=9Rpsygv25tf9Pl8i8jCHVFfG7Gn3KOAUOKWqOrOd_Ds';
 
 let points = 0;
 
@@ -126,11 +126,20 @@ async function redeemPoints() {
     const images = await fetchData(imageApiUrl);
     const imagesContainer = document.getElementById('images');
     imagesContainer.innerHTML = '';
-    images.forEach(image => {
+    for (let i = 0; i < 3; i++) {
       const img = document.createElement('img');
-      img.src = image.urls.small;
+      img.src = images[i].urls.small;
       imagesContainer.appendChild(img);
-    });
+
+      // Add download button for each image
+      const downloadButton = document.createElement('button');
+      downloadButton.textContent = 'Download';
+      downloadButton.className = 'download-button';
+      downloadButton.onclick = function() {
+        downloadImage(images[i].urls.full);
+      };
+      imagesContainer.appendChild(downloadButton);
+    }
 
     // Kurangi poin
     points -= 100;
@@ -163,4 +172,13 @@ function deleteTask(taskId, listItem) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
   // Tampilkan tanggal paling kecil dari localStorage di UI
   displaySmallestDeadline();
+}
+
+function downloadImage(url) {
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'image.jpg';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }

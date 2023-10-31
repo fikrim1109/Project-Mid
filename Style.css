@@ -4,9 +4,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: auto;
   background-image: url(background-image.jpg);
   background-size: cover;
+  overflow-y: scroll;
 }
 
 .container {
@@ -132,4 +133,37 @@ input[type="date"] {
 
 .delete-button:hover {
   background-color: #da190b; /* Warna merah yang sedikit lebih gelap saat hover */
+}
+.download-button {
+  background-color: #2196f3; /* Warna biru */
+  color: #fff; /* Warna teks putih */
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.download-button:hover {
+  background-color: #0c7cd5; /* Warna biru yang sedikit lebih gelap saat hover */
+}
+
+.image-container {
+  display: flex;
+  flex-direction: initial;
+  align-items: center;
+}
+
+.image-container img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.image-container a {
+  text-decoration: none;
 }
