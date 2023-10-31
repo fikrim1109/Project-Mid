@@ -16,14 +16,13 @@ function renderTask(task) {
   const taskName = document.createElement('span');
   taskName.textContent = task.title;
   li.appendChild(taskName);
-  
   // Deadline
   const deadline = document.createElement('span');
   deadline.textContent = ` (Deadline: ${task.deadline})`;
   deadline.style.fontStyle = 'italic';
   deadline.style.marginLeft = '10px'; // Pisahkan dengan margin kiri
   li.appendChild(deadline);
-  
+
   // Done button
   const doneButton = document.createElement('button');
   doneButton.textContent = 'Done';
@@ -43,12 +42,22 @@ function renderTask(task) {
     deleteTask(task.id, li, task.deadline);
   };
   li.appendChild(deleteButton);
-  
-  taskList.appendChild(li);
-}
 
-// Fungsi untuk menambahkan task dan tanggal ke localStorage
-async function addTask() {
+  taskList.appendChild(li);
+  
+    // Add redeem button
+    const redeemButton = document.createElement('button');
+    redeemButton.textContent = 'Redeem Points';
+    redeemButton.id = 'redeemButton';
+    redeemButton.onclick = function() {
+      redeemPoints();
+    };
+    document.getElementById('buttons').appendChild(redeemButton);
+  
+  }
+
+  // Fungsi untuk menambahkan task dan tanggal ke localStorage
+  async function addTask() {
   const taskText = document.getElementById("task").value;
   const deadline = document.getElementById("deadline").value;
 
@@ -76,12 +85,12 @@ async function addTask() {
   } else {
     alert("Invalid task or deadline input. Please enter both task and valid deadline.");
   }
-}
+  }
 
-localStorage.clear();
+  localStorage.clear();
 
-// Fungsi untuk menampilkan tanggal paling kecil dari localStorage di UI
-function displaySmallestDeadline() {
+  // Fungsi untuk menampilkan tanggal paling kecil dari localStorage di UI
+  function displaySmallestDeadline() {
   let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
   // Urutkan tasks berdasarkan deadline (tanggal paling kecil)
@@ -94,9 +103,9 @@ function displaySmallestDeadline() {
   const displayDeadline = document.getElementById("displayDeadline");
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   displayDeadline.textContent = new Date(smallestDeadline).toLocaleDateString(undefined, options);
-}
+  }
 
-function completeTask(taskId, listItem) {
+  function completeTask(taskId, listItem) {
   // Tandai tugas sebagai selesai di API (untuk simulasi, sebenarnya Anda harus menggunakan metode PUT/PATCH ke server)
   console.log('Task Completed:', taskId);
   listItem.remove();
@@ -118,9 +127,9 @@ function completeTask(taskId, listItem) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
   // Tampilkan tanggal paling kecil dari localStorage di UI
   displaySmallestDeadline();
-}
+  }
 
-async function redeemPoints() {
+  async function redeemPoints() {
   if (points >= 100) {
     // Tukar poin dengan gambar dari API Unsplash
     const images = await fetchData(imageApiUrl);
@@ -147,18 +156,18 @@ async function redeemPoints() {
   } else {
     alert('Not enough points to redeem.');
   }
-}
+  }
 
-// Fungsi untuk memuat tugas dari localStorage saat halaman dimuat
-window.onload = function() {
+  // Fungsi untuk memuat tugas dari localStorage saat halaman dimuat
+  window.onload = function() {
   displaySmallestDeadline();
   let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
   tasks.forEach(task => {
     renderTask(task);
   });
-};
+  };
 
-function deleteTask(taskId, listItem) {
+  function deleteTask(taskId, listItem) {
   // Hapus task dari localStorage
   let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
   tasks = tasks.filter(task => task.id !== taskId);
@@ -172,13 +181,13 @@ function deleteTask(taskId, listItem) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
   // Tampilkan tanggal paling kecil dari localStorage di UI
   displaySmallestDeadline();
-}
+  }
 
-function downloadImage(url) {
+  function downloadImage(url) {
   const a = document.createElement('a');
   a.href = url;
   a.download = 'image.jpg';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-}
+  }
