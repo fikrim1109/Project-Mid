@@ -1,3 +1,8 @@
+TODO LIST APP - FIKRI
+
+![image](https://github.com/fikrim1109/Project-Mid/assets/88815201/64d7621a-6275-4d26-9df2-74536a9ce012)
+
+
 # Project-Mid
 live preview at 
 https://fikrim1109.github.io/Project-Mid/Main.html
